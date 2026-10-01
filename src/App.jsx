@@ -11,7 +11,16 @@ state = {
 
  handleSubmit = (e) => {
   e.preventDefault()
-  } 
+     const newContact = {
+      name: this.state.name,
+      id: nanoid(),
+    };
+
+    this.setState((prevState) => ({
+      contacts: [newContact, ...prevState.contacts],
+      name: "",
+    }));
+  };
   
   handleChange = (e) => {
     const {name, value} = e.target
@@ -25,9 +34,7 @@ state = {
     return (
       <div>
         <h1>Phonebook</h1>
-
         <form onSubmit={this.handleSubmit}>
-
           <label> Name 
               <input
                 type="text"
@@ -41,9 +48,18 @@ state = {
           </label>
           <button type="submit">Add contact</button>
         </form>
+
+        <h2>Contacts</h2>
+        <ul>
+          {this.state.contacts.map(contact => {
+            return(
+            <li key={contact.id}>
+              {contact.name}
+              </li>
+              )})}
+        </ul>
       </div>
     );
-  }
-}
+  }}
 
 export default App;
