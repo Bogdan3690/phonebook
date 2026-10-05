@@ -1,6 +1,8 @@
 import { Component } from "react";
 import { nanoid } from "nanoid";
 import "./App.css";
+import { ContactList } from "./Components/ContactList/ContactList";
+import { Filter } from "./Components/Filter/Filter";
 
 class App extends Component {
   state = {
@@ -83,20 +85,8 @@ class App extends Component {
         <h2>Contacts</h2>
     {contacts.length > 0 && (
       <>
-      <label>
-          <input
-           type="text"
-           value={filter}
-           onChange={this.changeFilter}
-          />
-        </label>
-        <ul>
-          {filterContacts.map((contact) => {
-            return <li key={contact.id}>
-              {contact.name} : {contact.number}
-            </li>
-          })}
-        </ul>
+      <Filter filter={filter} changeFilter={this.changeFilter}/>
+        <ContactList filterContacts={filterContacts}/>
         </>
     )}
       {contacts.length === 0 && (
