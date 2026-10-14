@@ -4,6 +4,8 @@ import { ContactList } from "./Components/ContactList/ContactList";
 import { Filter } from "./Components/Filter/Filter";
 import { ContactForm } from "./Components/ContactForm/ContactForm";
 
+const STORAGEDATA = 'contacts'
+
 class App extends Component {
   state = {
     contacts: [],
@@ -15,6 +17,34 @@ class App extends Component {
       contacts: [newContact, ...prevState.contacts]
     }));
   };
+
+  componentDidMount(){
+    const savedContacts = localStorage.getItem(STORAGEDATA)
+    console.log(savedContacts);
+    if(savedContacts){
+      try{
+        const parsedContacts = JSON.parse(savedContacts)
+        this.setState({contacts: parsedContacts})
+      }
+      catch(error){
+        console.log(error);
+        this.setState({contacts: [] })
+      }
+    }
+    }
+
+    
+
+
+  componentDidUpdate(_, prevState){
+    const prevContacts = prevState.contacts
+    const currentContacts = this.state.contacts
+    console.log(currentContacts)
+    console.log(JSON.stringify(currentContacts))
+    if(prevContacts !== currentContacts){
+      localStorage.setItem(STORAGEDATA, JSON.stringify(currentContacts))
+    }
+  }
 
 
 
